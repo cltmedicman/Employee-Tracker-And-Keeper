@@ -8,7 +8,7 @@ const role = require('./app/lib/role');
 userInput();
 
 function userInput() {
-    const list = [
+    /* const list = [
         'View all employees',                   // 0
         'View all employees by department',     // 1
         'View all employees by manager',        // 2
@@ -24,16 +24,26 @@ function userInput() {
         'Delete Department',                    // 12
         'View total budget used by department', // 13
         'Quit'                                  // 14
-    ];
+    ]; */
     inquirer.prompt([
         {
             name: 'mainList',
             type: 'list',
             message: 'What would you like to do?',
-            choices: list
+            choices: [
+                {
+                  name: "View All Employees",
+                  value: "VIEW_EMPLOYEES"
+                },
+                {
+                  name: "View All Employees By Department",
+                  value: "VIEW_EMPLOYEES_BY_DEPARTMENT"
+                }
+            ]
         }
     ]).then((answer) => {
-        if (answer === list[0]) {
+        console.log(answer.choice);
+        /* if (answer === list[0]) {
             emp.view();
         };
 
@@ -91,6 +101,6 @@ function userInput() {
 
         if (answer === list[14]) {
             conn.end();
-        }
+        } */
     });
 };
