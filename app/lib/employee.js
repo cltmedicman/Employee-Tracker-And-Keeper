@@ -1,9 +1,9 @@
-const conn = require('../config/connection');
+const connection = require('../config/connection');
 const cTable = require('console.table');
 const inquirer = require('inquirer');
 
 function view() {
-    conn.query(`SELECT employee.id, 
+    connection.query(`SELECT employee.id, 
     employee.first_name, 
     employee.last_name, 
     role.title, 
