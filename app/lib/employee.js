@@ -6,16 +6,17 @@ function view() {
     connection.query(`SELECT employee.id, 
     employee.first_name, 
     employee.last_name, 
-    role.title, 
+    roles.title, 
     department.department_name AS 'department', 
-    role.salary
-    FROM employee, role, department 
-    WHERE department.id = role.department_id 
-    AND role.id = employee.role_id
+    roles.salary
+    FROM employee, roles, department
+    WHERE department.id = roles.department_id
+    AND roles.id = employee.role_id
     ORDER BY employee.id ASC`,
-    function (err, result, fields) {
+    (err, response) => {
         if (err) throw err;
-        cTable(result);
+        console.table(response);
+        console.log(response);
     });
 };
 
