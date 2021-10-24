@@ -1,5 +1,4 @@
 const connection = require('./app/config/connection');
-const cTable = require('console.table');
 const inquirer = require('inquirer');
 const worker = require('./app/lib/employee');
 const dep = require('./app/lib/department');
@@ -33,9 +32,7 @@ function userInput() {
             choices: list
         }
     ]).then((answer) => {
-        console.log(answer);
         if (answer = list[0]) {
-            console.log('Yes');
             worker.view();
         };
 
