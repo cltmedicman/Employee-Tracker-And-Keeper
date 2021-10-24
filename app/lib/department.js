@@ -5,6 +5,10 @@ function view() {
     // add code later
 };
 
+function employee() {
+    // add code later
+}
+
 function add() {
     // add code later
 };
@@ -17,4 +21,4 @@ function budget() {
     // add code later
 };
 
-module.exports = {view, add, remove, budget};
+module.exports = {view, add, remove, budget, employee};
