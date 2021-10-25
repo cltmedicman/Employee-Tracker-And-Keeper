@@ -16,6 +16,7 @@ This application is designed to allow the management of employees
 
 ## Screenshot
 
+![AD5hNX8](https://user-images.githubusercontent.com/79491454/138630573-2fb67b0e-3512-4dbd-a297-53349f65710f.gif)
 
 
 ## Installation
