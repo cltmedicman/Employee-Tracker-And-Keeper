@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "cli-interact": "^0.1.9",
     "console.table": "^0.10.0",
     "inquirer": "^8.2.0",
     "mysql": "^2.18.1",

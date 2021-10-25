@@ -1,6 +1,9 @@
 const connection = require('../config/connection');
 const inquirer = require('inquirer');
 const { removeListener } = require('../config/connection');
+// const main = require('./main');
+const role = require('./role');
+const dep = require('./department');
 
 
 function view() {
@@ -36,6 +39,7 @@ function viewByManager() {
 
     connection.query(manager, function(err, response) {
         if (err) throw err;
+        console.log(response);
         for (i = 0; i < response.length; ++i) {
             let res = response[i].first_name + " " + response[i].last_name;
             let id = response[i].id;
@@ -62,9 +66,8 @@ function viewByManager() {
         
                 console.table(response);
             });
-        });
+        }).then(userInput);
     });
-    
 };
 
 function updateMan() {
@@ -84,3 +87,92 @@ function remove() {
 };
 
 module.exports = {view, viewByManager, updateMan, add, updateRole, remove};
+
+function userInput() {
+    const list = [
+        'View all employees',                   // 0
+        'View all employees by department',     // 1
+        'View all employees by manager',        // 2
+        'View all departments',                 // 3
+        'View all roles',                       // 4
+        'Add department',                       // 5
+        'Add role',                             // 6
+        'Add employee',                         // 7
+        'Update employee role',                 // 8
+        'Update employee manager',              // 9
+        'Delete employee',                      // 10
+        'Delete Role',                          // 11
+        'Delete Department',                    // 12
+        'View total budget used by department', // 13
+        'Quit'                                  // 14
+    ];
+    inquirer.prompt([
+        {
+            name: 'mainList',
+            type: 'list',
+            message: 'What would you like to do?',
+            choices: list
+        }
+    ]).then((answer) => {
+        if (answer.mainList.mainList === list[0]) {
+            view();
+        }
+
+        else if (answer.mainList === list[1]) {
+            dep.employee();
+        }
+
+        else if (answer.mainList === list[2]) {
+            viewByManager();  
+        }
+    
+        else if (answer.mainList === list[3]) {
+            dep.view();
+        }
+
+        else if (answer.mainList === list[4]) {
+            role.view();
+        }
+
+        else if (answer.mainList === list[5]) {
+            dep.add();
+        }
+        
+        else if (answer.mainList === list[6]) {
+            role.add();
+        }
+
+        else if (answer.mainList === list[7]) {
+            add();
+        }
+
+        else if (answer.mainList === list[8]) {
+            updateRole();
+        }
+
+        else if (answer.mainList === list[9]) {
+            updateMan();
+        }
+
+        else if (answer.mainList === list[10]) {
+            remove();
+        }
+
+        else if (answer.mainList === list[11]) {
+            role.remove();
+        }
+
+        else if (answer.mainList === list[12]) {
+            dep.remove();
+        }
+
+        else if (answer.mainList === list[13]) {
+            dep.budget();
+        }
+
+        else if (answer.mainList === list[14]) {
+            connection.end();
+        }
+    })
+    
+};
