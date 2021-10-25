@@ -32,64 +32,66 @@ function userInput() {
             choices: list
         }
     ]).then((answer) => {
-        if (answer = list[0]) {
+        if (answer.mainList.mainList === list[0]) {
             worker.view();
-        };
+        }
 
-        if (answer = list[1]) {
+        else if (answer.mainList === list[1]) {
             dep.employee();
-        };
+        }
 
-        if (answer = list[2]) {
+        else if (answer.mainList === list[2]) {
             worker.viewByManager();
-        };
-        
-        if (answer = list[3]) {
+        }
+    
+        else if (answer.mainList === list[3]) {
             dep.view();
-        };
+        }
 
-        if (answer = list[4]) {
+        else if (answer.mainList === list[4]) {
             role.view();
-        };
+        }
 
-        if (answer = list[5]) {
+        else if (answer.mainList === list[5]) {
             dep.add();
-        };
+        }
         
-        if (answer = list[6]) {
+        else if (answer.mainList === list[6]) {
             role.add();
-        };
+        }
 
-        if (answer = list[7]) {
+        else if (answer.mainList === list[7]) {
             worker.add();
-        };
+        }
 
-        if (answer = list[8]) {
+        else if (answer.mainList === list[8]) {
             worker.updateRole();
-        };
+        }
 
-        if (answer = list[9]) {
+        else if (answer.mainList === list[9]) {
             worker.updateMan();
-        };
+        }
 
-        if (answer = list[10]) {
+        else if (answer.mainList === list[10]) {
             worker.remove();
-        };
+        }
 
-        if (answer = list[11]) {
+        else if (answer.mainList === list[11]) {
             role.remove();
-        };
+        }
 
-        if (answer = list[12]) {
+        else if (answer.mainList === list[12]) {
             dep.remove();
-        };
+        }
 
-        if (answer = list[13]) {
+        else if (answer.mainList === list[13]) {
             dep.budget();
-        };
+        }
 
-        if (answer = list[14]) {
+        else if (answer.mainList === list[14]) {
             connection.end();
         }
-    });
+    })
 };
+
+module.exports = {userInput};
