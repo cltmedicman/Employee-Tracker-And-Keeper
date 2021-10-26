@@ -10,73 +10,114 @@ function view() {
 };
 
 function viewEmployee() {
-    // fix this
-    inquirer.prompt([
-        {
-            name: 'dep',
-            type: 'list',
-            message: 'Select department to view employee\'s from',
-            choices: response.map((item) => {
-                return item.department_name
-            })
-        }
-    ]).then((answer) => {
-        let table = `SELECT * FROM employee;`
+    let dep = `SELECT d.department_name AS name
+    FROM department d;`
 
-        connection.query(table, function(err, response) {
-                if (err) throw err;
-                console.log('');
-                console.table(response);
+    connection.query(dep, function(err, response) {
+        if (err) throw err;
+
+        inquirer.prompt([
+            {
+                name: 'dep',
+                type: 'list',
+                message: 'Select department to view employee\'s from',
+                choices: response.map((item) => {
+                    return item.name
+                })
             }
-        )
+        ]).then((answer) => {
+            let table = `SELECT * FROM employee e
+            LEFT JOIN roles r 
+            ON r.id = e.role_id 
+            LEFT JOIN department d 
+            ON d.id = r.department_id
+            WHERE d.department_name = '${answer.dep}';`
+    
+            connection.query(table, function(err, response) {
+                    if (err) throw err;
+                    console.log('');
+                    console.table(response);
+                }
+            )
+        })
     })
 }
 
 function add() {
-    // add code later
+    inquirer.prompt([
+        {
+            name: 'dep',
+            type: 'input',
+            message: 'Enter department:'
+        }
+    ]).then((answer) => {
+        connection.query(
+            `INSERT INTO department(department_name)
+            VALUES ('${answer.dep}')`
+        )
+    })
 };
 
 function remove() {
-    // add code later
-};
-
-function budget() {
-    // add code later
-};
-
-function DepArrId() {
-    let arr = [];
-    let depId = `SELECT department.id
-    FROM department;`
-
-    connection.query(depId, function(err, response) {
-        if (err) throw err;
-        
-        for (i = 0; i < response.length; ++i) {
-            let res = response[i].id;
-            arr.push(res);
-        }
-    })
-    
-    return arr;
-}
-
-function DepArr() {
-    let arr = [];
-    let dep = `SELECT department.department_name
-    FROM department;`
+    let dep = `SELECT d.department_name AS name
+    FROM department d;`
 
     connection.query(dep, function(err, response) {
         if (err) throw err;
-        
-        for (i = 0; i < response.length; ++i) {
-            let res = response[i].department_name;
-            arr.push(res);
-        }
-    })
-    
-    return arr;
 
-}
+        inquirer.prompt([
+            {
+                name: 'dep',
+                type: 'list',
+                message: 'Select department to remove',
+                choices: response.map((item) => {
+                    return item.name
+                })
+            }
+        ]).then((answer) => {
+            connection.query(
+                `DELETE FROM department
+                WHERE department_name = '${answer.dep}';`
+            )
+        })
+    })
+};
+
+function budget() {
+    let dep = `SELECT d.department_name AS name
+    FROM department d;`
+    
+    connection.query(dep, function(err, response) {
+        if (err) throw err;
+
+        inquirer.prompt([
+            {
+                name: 'dep',
+                type: 'list',
+                message: 'Select department to show budget',
+                choices: response.map((item) => {
+                    return item.name
+                })
+            }
+        ]).then((answer) => {
+            let salary = `SELECT r.salary AS salary
+                FROM employee e
+                LEFT JOIN roles r 
+                ON r.id = e.role_id 
+                LEFT JOIN department d 
+                ON d.id = r.department_id
+                WHERE d.department_name = '${answer.dep}';`
+            
+            connection.query(salary, function(err, response) {
+                if (err) throw err;
+                let total = 0;
+                response.forEach((item) => {
+                    total += item.salary;
+                })
+                console.log('Total salary for ', answer.dep, ' is: ', total);
+            })
+        })
+    })
+};
 
 module.exports = {view, add, remove, budget, viewEmployee};

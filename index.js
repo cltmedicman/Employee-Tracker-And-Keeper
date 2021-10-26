@@ -38,7 +38,9 @@ const userInput= () => {
 
         else if (answer.mainList === list[1]) {
             dep.viewEmployee();
-            
+            setTimeout(() => {
+                userInput();
+            },5000)
         }
 
         else if (answer.mainList === list[2]) {
@@ -59,7 +61,10 @@ const userInput= () => {
         }
 
         else if (answer.mainList === list[5]) {
-            depAdd();
+            dep.add();
+            setTimeout(() => {
+                userInput();
+            },8000)
         }
         
         else if (answer.mainList === list[6]) {
@@ -105,11 +110,17 @@ const userInput= () => {
         }
 
         else if (answer.mainList === list[12]) {
-            depRemove();
+            dep.remove();
+            setTimeout(() => {
+                userInput();
+            },8000)
         }
 
         else if (answer.mainList === list[13]) {
-            depBudget();
+            dep.budget();
+            setTimeout(() => {
+                userInput();
+            },8000)
         }
 
         else if (answer.mainList === list[14]) {

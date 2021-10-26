@@ -1,7 +1,5 @@
 const connection = require('../config/connection');
 const inquirer = require('inquirer');
-/* const role = require('./role');
-const dep = require('./department'); */
 
 function view() {
     let table = `SELECT e.id AS "ID", 

@@ -78,42 +78,6 @@ function remove() {
     })
 };
 
-/* function RoleArr() {
-    let arr = [];
-    let role = `SELECT roles.title
-    FROM roles;`
-
-    connection.query(role, function(err, response) {
-        if (err) throw err;
-        
-        for (i = 0; i < response.length; ++i) {
-            let res = response[i].title;
-            arr.push(res);
-        }
-    })
-    
-    return arr;
-
-}
-
-function RoleArrId() {
-    let arr = [];
-    let roleId = `SELECT roles.id
-    FROM roles;`
-
-    connection.query(roleId, function(err, response) {
-        if (err) throw err;
-        
-        for (i = 0; i < response.length; ++i) {
-            let res = response[i].id;
-            arr.push(res);
-        }
-    })
-    
-    return arr;
-
-} */
-
 function DepArrId() {
     let arr = [];
     let depId = `SELECT department.id
