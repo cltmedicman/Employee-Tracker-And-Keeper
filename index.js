@@ -1,9 +1,8 @@
 const connection = require('./app/config/connection');
 const inquirer = require('inquirer');
-const cont = require('cli-interact').getYesNo;
-
-
-
+const emp = require('./app/lib/employee');
+const role = require('./app/lib/role');
+const dep = require('./app/lib/department');
 
 const userInput= () => {
     console.clear();
@@ -33,23 +32,30 @@ const userInput= () => {
         }
     ]).then((answer) => {
         if (answer.mainList === list[0]) {
-            viewEmployees();
+            emp.view();
+            userInput();
         }
 
         else if (answer.mainList === list[1]) {
-            depEmployee();
+            dep.viewEmployee();
+            
         }
 
         else if (answer.mainList === list[2]) {
-            viewByManager();  
+            emp.viewByManager();  
+            setTimeout(() => {
+                userInput();
+            },5000)
         }
     
         else if (answer.mainList === list[3]) {
-            depView();
+            dep.view();
+            userInput();
         }
 
         else if (answer.mainList === list[4]) {
-            roleView();
+            role.view();
+            userInput();
         }
 
         else if (answer.mainList === list[5]) {
@@ -57,27 +63,45 @@ const userInput= () => {
         }
         
         else if (answer.mainList === list[6]) {
-            roleAdd();
+            role.add();
+            setTimeout(() => {
+                userInput();
+            },15000)
         }
 
         else if (answer.mainList === list[7]) {
-            addEmployee();
+            emp.add();
+            setTimeout(() => {
+                userInput();
+            },15000)
         }
 
         else if (answer.mainList === list[8]) {
-            updateRole();
+            emp.updateRole();
+            setTimeout(() => {
+                userInput();
+            },8000)
         }
 
         else if (answer.mainList === list[9]) {
-            updateMan();
+            emp.updateMan();
+            setTimeout(() => {
+                userInput();
+            },8000)
         }
 
         else if (answer.mainList === list[10]) {
-            removeEmployee();
+            emp.remove();
+            setTimeout(() => {
+                userInput();
+            },8000)
         }
 
         else if (answer.mainList === list[11]) {
-            roleRemove();
+            role.remove();
+            setTimeout(() => {
+                userInput();
+            },8000)
         }
 
         else if (answer.mainList === list[12]) {
@@ -93,92 +117,6 @@ const userInput= () => {
         }
     })
     
-};
-
-function viewEmployees() {
-    let table = `SELECT e.id AS "ID", 
-    e.first_name AS "First Name", 
-    e.last_name AS "Last Name", 
-    r.title AS "Title", 
-    d.department_name AS "Department", 
-    IFNULL(r.salary, 'No Salary Info') AS "Salary", 
-    IFNULL(CONCAT(m.first_name," ",m.last_name), 'No Manager') AS "Manager"
-    FROM employee e
-    LEFT JOIN roles r 
-    ON r.id = e.role_id 
-    LEFT JOIN department d 
-    ON d.id = r.department_id
-    LEFT JOIN employee m ON m.id = e.manager_id
-    ORDER BY e.id;`
-    
-    connection.query(table, function(err, response) {
-        if (err) throw err;
-        console.log('');
-        console.table(response);
-    })
-    console.log('');
-    userInput();        
-};
-
-function viewByManager() {
-    let managerArr = [];
-    let idArr = [];
-    let manager = `SELECT *
-    FROM employee 
-    LEFT JOIN roles ON roles.id = employee.role_id
-    WHERE roles.title LIKE '%Lead%';`
-
-    connection.query(manager, function(err, response) {
-        if (err) throw err;
-        //console.log(response);
-        for (i = 0; i < response.length; ++i) {
-            let res = response[i].first_name + " " + response[i].last_name;
-            let id = response[i].id;
-            managerArr.push(res);
-            idArr.push(id);
-        }
-        inquirer.prompt([
-            {
-                name: 'managerList',
-                type: 'list',
-                message: 'Which manager\'s employees would you like to view?',
-                choices: managerArr
-            }
-        ]).then(async (answer) => {
-            let id = idArr[managerArr.indexOf(answer.managerList)];
-            console.log(id);
-
-            let table = `SELECT *
-            FROM employee
-            WHERE employee.manager_id=${id};`
-
-            connection.query(table,await function(err, response) {
-                if (err) throw err;
-                console.log('');
-                console.table(response);
-            });
-        }).then(() => {
-            userInput();
-        })
-        
-    });
-    
-};
-
-function updateMan() {
-    // add code later
-};
-
-function add() {
-    // add code later
-};
-
-function updateRole() {
-    // add code later
-};
-
-function remove() {
-    // add code later
 };
 
 userInput();
