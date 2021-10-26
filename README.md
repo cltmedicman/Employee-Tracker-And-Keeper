@@ -3,7 +3,7 @@
 
 ## Description
 
-This application is designed to allow the management of employees
+This application is designed to allow the management of employees via mysql database
 
 ## Table of Contents
 - [Deployed](#deployed)
@@ -13,6 +13,8 @@ This application is designed to allow the management of employees
 - [License](#license)
 
 ## Deployed
+
+[Video link showing application running](https://watch.screencastify.com/v/D3V9KA8meo72GXnxKFGK)
 
 ## Screenshot
 
